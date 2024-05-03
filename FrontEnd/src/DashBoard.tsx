@@ -1,14 +1,10 @@
 
-import {Box , BottomNavigation,BottomNavigationAction,Paper } from '@mui/material';
+import {Box , BottomNavigation,BottomNavigationAction,Paper, Typography } from '@mui/material';
 import {Link} from "react-router-dom"
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Feed from './Feed';
 import Progressive from './Progressive';
 import Workout from './Workout';
-
-
-
-  
 
 const DashBoard = () => {
     
@@ -26,9 +22,9 @@ const DashBoard = () => {
                         <BottomNavigation
                         showLabels
                         >
-                            <BottomNavigationAction label="Feed" component = {Link}  to="/Feed" />
-                            <BottomNavigationAction label="Workout" component = {Link}  to="/Workout"/>
-                            <BottomNavigationAction label="Progress" component = {Link}  to="/Progressive" />
+                            <BottomNavigationAction label={ <Typography variant='h6' fontWeight="bold"> Feed </Typography>} component = {Link}  to="/Feed"  />
+                            <BottomNavigationAction label={ <Typography variant='h6' fontWeight="bold"> Workout </Typography>} component = {Link}  to="/Workout"/>
+                            <BottomNavigationAction label={ <Typography variant='h6' fontWeight="bold"> Progressive </Typography>} component = {Link}  to="/Progressive" />
                         </BottomNavigation>
                     </Paper>
             </Box>
