@@ -1,20 +1,29 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
+import Feed from './Feed.tsx'
+import Progressive from './Progressive.tsx'
+import Workout from './Workout.tsx'
 import './index.css'
 import {createBrowserRouter,RouterProvider} from "react-router-dom"
-import Demo from './Demo.tsx'
-import NotFoundPage from './NotFoundPage.tsx'
+
 
 const router = createBrowserRouter([
   {
     path:'/',
-    element:<App/>,
-    errorElement: <NotFoundPage/>
+    element:<App/>
   },
   {
-    path:'/demo1',
-    element: <Demo/>
+    path:'/Feed',
+    element:<Feed/>
+  },
+  {
+    path:'/Progressive',
+    element:<Progressive/>
+  },
+  {
+    path:'/Workout',
+    element:<Workout/>
   }
 ])
 
