@@ -2,10 +2,9 @@ import React, { useRef } from 'react'
 
 const RefConcept = () => {
     const inputref = useRef<HTMLInputElement|null>(null)
-    const vlaueref = useRef(0)
+    const vlaueref = useRef<number>(10)
     const pref = useRef<HTMLParagraphElement>(null);
 
-    console.log("value",vlaueref.current++)
     const handleClick =()=>{
          console.log("Ref Value",inputref.current)
          if(pref.current){
@@ -17,6 +16,7 @@ const RefConcept = () => {
         <input ref = {inputref} type="text" placeholder='Type anything' />
         <button onClick={handleClick}>Submit</button>
         <p ref = {pref}>Inital Value</p>
+        <p>{vlaueref.current}</p>
     </div>
   )
 }
