@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {Box, Button,Dialog,Slide,DialogContent} from '@mui/material'
 import { TransitionProps } from '@mui/material/transitions';
-import ListWorkout from './ListWorkout';
+import ListWorkout from '../ListWorkout/ListWorkout';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -9,7 +9,7 @@ const Transition = React.forwardRef(function Transition(
   },
   ref: React.Ref<unknown>,
 ) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="left" ref={ref} {...props} />;
 });
 
 const Workout = () => {
