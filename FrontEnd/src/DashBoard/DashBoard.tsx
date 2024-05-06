@@ -4,7 +4,7 @@ import {Link} from "react-router-dom"
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Feed from '../Feed/Feed';
 import Progressive from '../Progressive/Progressive';
-import Workout from '../WorkOut/Workout';
+import Workout from '../WorkOut/Workout'; 
 
 const DashBoard = () => {
     
