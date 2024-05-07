@@ -55,7 +55,7 @@
 		"Id": 11,
 		"Name": "RDL Row",
 		"Muscle":"Chest",
-		"tool":"Close-Grip Bench Press"
+		"tool":"Rod"
 	},{
 		"Id": 12,
 		"Name": "Reverse Grip Press",
