@@ -80,27 +80,27 @@
 		"Id": 16,
 		"Name": "Bent Over Dumbbell Row",
 		"Muscle":"Back",
-		"tool":"Dumbell"
+		"tool":"Dumbbell"
 	},{
 		"Id": 17,
 		"Name": "Batwing Row",
 		"Muscle":"Back",
-		"tool":"Dumbell"
+		"tool":"Dumbbell"
 	},{
 		"Id": 18,
 		"Name": "Unilateral Dumbbell Carry",
 		"Muscle":"Back",
-		"tool":"Dumbell"
+		"tool":"Dumbbell"
 	},{
 		"Id": 19,
 		"Name": "Unilateral Deadstop Row",
 		"Muscle":"Back",
-		"tool":"Dumbell"
+		"tool":"Dumbbell"
 	},{
 		"Id": 20,
 		"Name": "Chest-Supported Row",
 		"Muscle":"Back",
-		"tool":"Dumbell"
+		"tool":"Dumbbell"
 	},{
 		"Id": 21,
 		"Name": "Back Extension Machine",

@@ -40,95 +40,63 @@ const ListWorkout = () => {
     {'id':6,'Name':'Triceps','check':false},
   ])
    
-  const [tooData,settoolData] = useState<ListtDataType[]>([
+  const [toolData,settoolData] = useState<ListtDataType[]>([
     {'id':1,'Name':'Machine','check':false},
     {'id':2,'Name':'Dumbbell','check':false},
     {'id':3,'Name':'Rod','check':false}
 ])
 
-  const [selectedMuscle,setSelectMuscle] = useState<boolean>(false)
-  const [selectedTool,setSelectedTool] = useState<boolean>(false)
   const [showList,setShowList] = useState<jsonType[]>([])
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   const handleMuscle= (muscleList:ListtDataType):void => {
-    console.log("handleMuscle")
-      const checkedMuscle = MusclesData.map((item)=>(
+        const checkedMuscle = MusclesData.map((item)=>(
           item.id == muscleList.id ? {...item,check:!item.check}:item)
         )
-      setMusclesData(checkedMuscle)
-      
-      let filterData:jsonType[]
-      let whoelData:jsonType[] = []
-      checkedMuscle.forEach((item)=>{
-          if(item.check){
-            filterData =  jsonData.filter((jsonElement)=>{
-              if(jsonElement.Muscle == item.Name){
-                 return item
-              }
+        setMusclesData(checkedMuscle)
+        const checkedMuscleData = checkedMuscle.filter((el)=>el.check).map((el)=>el.Name)
+        const checkedTools = toolData.filter((el)=>el.check).map((el)=>el.Name)
+        if(checkedMuscleData.length > 0 && checkedTools.length > 0 ){
+              const exerciseList = jsonData.filter((el)=>{
+                return checkedMuscleData.includes(el.Muscle)
+              })
+              const listData = exerciseList.filter((el)=>{
+                 return checkedTools.includes(el.tool)
+              })
+              console.log('listData',listData)
+              setShowList(listData)
+        }else{
+            const exerciseList = jsonData.filter((el)=>{
+              return checkedMuscleData.includes(el.Muscle)
             })
-            whoelData = [...whoelData,...filterData]
-          }          
-      })  
-     const booleanData = checkedMuscle.every((item)=> item.check === false)
-      if(booleanData == false){
-        showListFilteration(whoelData,true,"Muscle")
-      }else{
-        showListFilteration(whoelData,false,"Muscle")
-      }
-      
-     
+           setShowList(exerciseList)
+        }
+    
   }
-  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++
-   const handleTool = (tool:ListtDataType) =>{
-          // console.log("Handletoo")
-          const checkedtool = tooData.map((item)=>(
+  const handleTool = (tool:ListtDataType)=>{
+          const checkedtool = toolData.map((item)=>(
             item.id == tool.id ? {...item,check:!item.check}:item)
           )
           settoolData(checkedtool)
-
-          let filterData:jsonType[]
-          let whoelData:jsonType[] = []
-          checkedtool.forEach((item)=>{
-              if(item.check){
-                filterData =  jsonData.filter((jsonElement)=>{
-                  if(jsonElement.tool == item.Name){
-                     return item
-                  }
+          const checkedtoolData = checkedtool.filter((el)=>el.check).map((el)=>el.Name)
+          const checkedMuscle = MusclesData.filter((el)=>el.check).map((el)=>el.Name)
+          if(checkedtoolData.length > 0 && checkedMuscle.length > 0 ){
+                const exerciseList = jsonData.filter((el)=>{
+                  return checkedMuscle.includes(el.Muscle)
                 })
-                whoelData = [...whoelData,...filterData]
-              }          
-          })  
-          const booleanData = checkedtool.every((item)=> item.check === false)
-          if(booleanData == false){
-            showListFilteration(whoelData,true,"Muscle")
+                const listData = exerciseList.filter((el)=>{
+                   return checkedtoolData.includes(el.tool)
+                })
+                console.log('listData',listData)
+                setShowList(listData)
           }else{
-            showListFilteration(whoelData,false,"Muscle")
+                const exerciseList = jsonData.filter((el)=>{
+                  return checkedtoolData.includes(el.tool)
+                })
+               setShowList(exerciseList)
           }
-  }
-     
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-  const showListFilteration = (arg:jsonType[],booleanData:boolean,whichData:string)=>{
-    console.log('arg',arg,' boolean',booleanData)
-    let muscleBoolean:boolean = false
-    let toolBoolean:boolean = false
-    if(whichData == "Muscle"){
-      muscleBoolean = booleanData;
-    }else{
-      toolBoolean = booleanData;
-    }
-   
-
-    if((muscleBoolean) && (!toolBoolean)){
-        setShowList([...arg])
-    }else if((!muscleBoolean) && (!toolBoolean)){
-      setShowList([])
-    }else if((!muscleBoolean) && (toolBoolean)){
-      setShowList([...arg])
-    }
+           
   }
  
-
   return (
     <div>
        <Grid container spacing={5}>
@@ -146,7 +114,7 @@ const ListWorkout = () => {
               />
               </Grid>
           )}
-          {tooData.map((element)=>
+          {toolData.map((element)=>
              <Grid item xs={3}>
               {/* <button onClick={toggleEnabled}>Toggle</button>  */}
               <Chip  
