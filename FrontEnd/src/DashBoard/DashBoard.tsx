@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Feed from '../Feed/Feed';
 import Progressive from '../Progressive/Progressive';
 import Workout from '../WorkOut/Workout'; 
+import ActivityPage from '../ActivityPage/ActivityPage';
 
 const DashBoard = () => {
     
@@ -16,6 +17,7 @@ const DashBoard = () => {
                             <Route path= "/Feed" element = {<Feed/>}/>
                             <Route path= "/Workout" element = {<Workout/>}/>
                             <Route path="/Progressive" element = {<Progressive/>}/>
+                            {/* <Route path="/ActivityPage" element = {<ActivityPage/>}/> */}
                         </Routes>   
                     </Box>
                     <Paper sx ={{position:'fixed',bottom:0,left:0,right:0}}>
@@ -28,6 +30,9 @@ const DashBoard = () => {
                         </BottomNavigation>
                     </Paper>
             </Box>
+            <Routes>
+                 <Route path="/ActivityPage" element={<ActivityPage />} />
+           </Routes>
     </Router>
   
   )

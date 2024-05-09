@@ -1,9 +1,10 @@
 
-import {Chip,Grid,List,ListItem,ListItemText,Checkbox} from '@mui/material';
+import {Button,Box,Chip,Grid,List,ListItem,ListItemText,Checkbox,BottomNavigation,BottomNavigationAction,Typography,Paper} from '@mui/material';
 import jsonData from '../Data/MockJson/ExerciseList.json'
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
-import { boolean, set } from 'zod';
+
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
   enableChips:{
@@ -30,6 +31,7 @@ type jsonType = {
 }
 
 const ListWorkout = () => {
+  const navigate = useNavigate()
   const classes = useStyles();
   const [MusclesData,setMusclesData] = useState<ListtDataType[]>([
     {'id':1,'Name':'Chest','check':false},
@@ -61,7 +63,7 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
               const listData = exerciseList.filter((el)=>{
                  return checkedtoolData.includes(el.tool)
               })
-              console.log('listData',listData)
+              
               setShowList(listData)
         }else if(checkedtoolData.length > 0 && checkedMuscle.length <= 0){
               const exerciseList = jsonData.filter((el)=>{
@@ -91,6 +93,9 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
       )
       settoolData(checkedtool)
       filterList(MusclesData,checkedtool)
+  }
+  const handleActivityPage = () =>{
+    navigate('/ActivityPage')
   }
  
   return (
@@ -128,16 +133,24 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
       <Grid container spacing={5} sx ={{marginTop:"80px",display:"flex",justifyContent:'center'}}>
           <List>
              {showList.map((item,index)=>(
-              <ListItem key={index}>
-                   <ListItemText primary={item.Name}/>
-                   <ListItemText primary={item.Muscle}/>
-                   <ListItemText primary={item.tool}/>
-                  <Checkbox/>
-            </ListItem>
-             ))
+                  <ListItem key={index}>
+                      <ListItemText primary={item.Name}/>
+                      <ListItemText primary={item.Muscle}/>
+                      <ListItemText primary={item.tool}/>
+                      <Checkbox/>
+                </ListItem>
+                ))
              }
           </List>
       </Grid>
+    
+      
+  
+    <Box position="fixed" bottom={0}  p={2}  boxShadow={3}  >
+         <Button variant="contained" onClick={()=>handleActivityPage()} >Start </Button>
+    </Box>
+      
+          
     </div>
   )
 }
