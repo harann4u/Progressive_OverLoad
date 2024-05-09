@@ -54,7 +54,6 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
       const checkedtoolData = toolcheckData.filter((el)=>el.check).map((el)=>el.Name)
       const checkedMuscle = MusclecheckData.filter((el)=>el.check).map((el)=>el.Name)
 
-      console.log('checkedtoolData',checkedtoolData,'checkedMuscle',checkedMuscle)
    if(checkedtoolData.length > 0 && checkedMuscle.length > 0 ){
               const exerciseList = jsonData.filter((el)=>{
                 return checkedMuscle.includes(el.Muscle)
