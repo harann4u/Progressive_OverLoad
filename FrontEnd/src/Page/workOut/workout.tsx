@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {Box, Button,Dialog,Slide,DialogContent} from '@mui/material'
 import { TransitionProps } from '@mui/material/transitions';
-import ListWorkout from '../ListWorkout/ListWorkout';
+import ListWorkout from '../../figma/listWorkout/listWorkout';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {

@@ -1,4 +1,4 @@
-[
+export const ExerciseList = [
 	{
 		"Id": 1,
 		"Name": "Dumbbell Flat Bench Press",

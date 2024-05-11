@@ -1,8 +1,6 @@
 import './App.css'
-import DashBoard from './DashBoard/DashBoard'
-import RefConcept from './Concept_implementations/RefConcept'
-import { useState } from 'react'
-import { DashBoardContext } from './GlobalContext/context'
+import AppRoutes from './routes'
+import { GlobalContextProvider } from './data/context/globalcontext'
 
 export interface SampleData {
     Name:string,
@@ -10,17 +8,13 @@ export interface SampleData {
 }
 
 function App() { 
-  const [user] = useState<SampleData>({
-    Name:'Hariharan',
-    isBoolean:true
-  }) 
+  
   return (
     <div>
-       <DashBoardContext.Provider value = {user} >
-           <DashBoard/>
-       </DashBoardContext.Provider>
-       
-        {/* <RefConcept/> */}
+      <GlobalContextProvider>
+           <AppRoutes/>
+      </GlobalContextProvider>
+     
     </div>
   )
 }

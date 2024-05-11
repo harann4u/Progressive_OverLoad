@@ -1,6 +1,6 @@
 
-import {Button,Box,Chip,Grid,List,ListItem,ListItemText,Checkbox,BottomNavigation,BottomNavigationAction,Typography,Paper} from '@mui/material';
-import jsonData from '../Data/MockJson/ExerciseList.json'
+import {Button,Chip,Grid,List,ListItem,ListItemText,Checkbox} from '@mui/material';
+import { ExerciseList } from '../../data/mockJson/exerciselist';
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 
@@ -27,10 +27,16 @@ type jsonType = {
     "Id": number,
 		"Name": string,
 		"Muscle":string,
-		"tool": string
+		"tool": string,
+    "check":boolean
 }
 
 const ListWorkout = () => {
+  const newList = ExerciseList.map((el)=>{
+      return {...el,check:false}
+  })
+ 
+   const [UpdateExerciseList,setUpdateExerciseList] = useState<jsonType[]>(newList)
   const navigate = useNavigate()
   const classes = useStyles();
   const [MusclesData,setMusclesData] = useState<ListtDataType[]>([
@@ -57,21 +63,20 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
       const checkedMuscle = MusclecheckData.filter((el)=>el.check).map((el)=>el.Name)
 
    if(checkedtoolData.length > 0 && checkedMuscle.length > 0 ){
-              const exerciseList = jsonData.filter((el)=>{
+              const exerciseList = UpdateExerciseList.filter((el)=>{
                 return checkedMuscle.includes(el.Muscle)
               })
               const listData = exerciseList.filter((el)=>{
                  return checkedtoolData.includes(el.tool)
               })
-              
               setShowList(listData)
         }else if(checkedtoolData.length > 0 && checkedMuscle.length <= 0){
-              const exerciseList = jsonData.filter((el)=>{
+              const exerciseList = UpdateExerciseList.filter((el)=>{
                 return checkedtoolData.includes(el.tool)
               })
             setShowList(exerciseList)
         }else{
-              const exerciseList = jsonData.filter((el)=>{
+              const exerciseList = UpdateExerciseList.filter((el)=>{
                 return checkedMuscle.includes(el.Muscle)
               })
             setShowList(exerciseList)
@@ -94,37 +99,46 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
       settoolData(checkedtool)
       filterList(MusclesData,checkedtool)
   }
-  const handleActivityPage = () =>{
-    navigate('/ActivityPage')
+
+  const handleChooseExercise = (id:number)=> {
+     const checkedExercise = showList.map((item)=>(
+      item.Id == id ? {...item,check:!item.check}:item)
+    )
+    setShowList(checkedExercise)
+    const checkingData = UpdateExerciseList.map((item)=>(
+      item.Id == id ? {...item,check:!item.check}:item)
+    )
+    setUpdateExerciseList(checkingData)
+    
   }
- 
+
+  const handleActivityPage = () =>{
+     const finalList = showList.filter((el) => el.check)
+     console.log('finalist',finalList)
+     navigate('/ActivityPage')
+ }
+
   return (
     <div>
        <Grid container spacing={5}>
             {MusclesData.map((element)=>
              <Grid item xs={3}>
-              {/* <button onClick={toggleEnabled}>Toggle</button>  */}
               <Chip  
                 key= {element.id}
                 label= {element.Name} 
                 variant="outlined"
                 className={element.check ? classes.enableChips : classes.disableChips}
-                // clickable={Enable} // Make the chip clickable only if it's enabled
-                // disabled={!Enable} // Disable the chip if it's not enabled
                 onClick={()=>handleMuscle(element)}
               />
               </Grid>
           )}
           {toolData.map((element)=>
              <Grid item xs={3}>
-              {/* <button onClick={toggleEnabled}>Toggle</button>  */}
               <Chip  
                 key= {element.id}
                 label= {element.Name} 
                 variant="outlined"
                 className={element.check ? classes.enableChips : classes.disableChips}
-                // clickable={Enable} // Make the chip clickable only if it's enabled
-                // disabled={!Enable} // Disable the chip if it's not enabled
                 onClick={()=>handleTool(element)}
               />
               </Grid>
@@ -137,20 +151,18 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
                       <ListItemText primary={item.Name}/>
                       <ListItemText primary={item.Muscle}/>
                       <ListItemText primary={item.tool}/>
-                      <Checkbox/>
+                      <Checkbox
+                        checked= {item.check}
+                        onChange={()=>handleChooseExercise(item.Id)}
+                      />
                 </ListItem>
                 ))
              }
           </List>
       </Grid>
-    
-      
-  
-    <Box position="fixed" bottom={0}  p={2}  boxShadow={3}  >
-         <Button variant="contained" onClick={()=>handleActivityPage()} >Start </Button>
-    </Box>
-      
-          
+          <div>
+               <Button sx = {{display:'flex',alignItems:'center' }}variant='contained' onClick={()=>handleActivityPage()}>Start</Button>
+          </div>       
     </div>
   )
 }
