@@ -16,7 +16,7 @@ export const initialSettingInfo:ISettingInfo = {
     fontsize:'0'
 } 
 
-export interface josnDataType {
+export interface ExerciseDataType {
     "Id": number,
 	"Name": string,
 	"Muscle":string,
@@ -24,7 +24,7 @@ export interface josnDataType {
     "check":boolean
 }
 
-export const InitalListData:josnDataType[] = [{
+export const InitalListData:ExerciseDataType[] = [{
     "Id": 0,
 	"Name": '',
 	"Muscle":'',
@@ -32,6 +32,29 @@ export const InitalListData:josnDataType[] = [{
     "check":false
 }] 
 
+export interface muscleDataType {
+    "id":number,
+    "Name" :string,
+    "check":boolean
+}
+
+export interface toolDataType {
+    "id":number,
+    "Name" :string,
+    "check":boolean
+}
+
+export const initialMuscleData:muscleDataType[] = [{
+    "id":0,
+    "Name":'',
+    "check":false
+}]
+
+export const initialtoolData:toolDataType[] = [{
+    "id":0,
+    "Name":'',
+    "check":false
+}]
 
 
 export interface IGlobalContext {
@@ -40,8 +63,14 @@ export interface IGlobalContext {
     settingInfo: ISettingInfo,
     setSettingInfo: (e: ISettingInfo) => void;
     // Checked List 
-    finalList: josnDataType[],
-    setFinalList: (newList: josnDataType[]) => void;
+    updateExerciseList: ExerciseDataType[],
+    setupdateExerciseList: (newList: ExerciseDataType[]) => void;
+    // Muscle
+    muscelList:muscleDataType[],
+    setMuscleList:(eachList:muscleDataType[]) => void;
+    // Tool
+    toolList:toolDataType[]
+    setToolList:(eachList:toolDataType[]) => void
 }
 // export const initalGlobalContext = {
 //     useInfo:{
@@ -53,8 +82,6 @@ export interface IGlobalContext {
 //         fontsize:''
 //     },
 //     setSettingInfo:()=> null,
-  
-
 // }
 
 

@@ -1,7 +1,7 @@
 
 import {Button,Chip,Grid,List,ListItem,ListItemText,Checkbox} from '@mui/material';
 import { ExerciseList } from '../../data/mockJson/exerciselist';
-import { useState,useContext } from 'react';
+import { useState,useContext, useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import { GlobalContent } from '../../data/context/globalcontext';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 })
 
 type ListtDataType = {
-  id:number,
+   id:number,
    Name:string,
    check:boolean
 }
@@ -32,99 +32,96 @@ type jsonType = {
 }
 
 const ListWorkout = () => {
-  const newList = ExerciseList.map((el)=>{
-      return {...el,check:false}
-  })
-  
-  const {setFinalList} = useContext(GlobalContent)
-  const [UpdateExerciseList,setUpdateExerciseList] = useState<jsonType[]>(newList)
+  const {setupdateExerciseList,updateExerciseList,muscelList,setMuscleList,toolList,setToolList} = useContext(GlobalContent)
   const navigate = useNavigate()
   const classes = useStyles();
-  const [MusclesData,setMusclesData] = useState<ListtDataType[]>([
-    {'id':1,'Name':'Chest','check':false},
-    {'id':2,'Name':'Back','check':false},
-    {'id':3,'Name':'Shoulder','check':false},
-    {'id':4,'Name':'Leg','check':false},
-    {'id':5,'Name':'Biceps','check':false},
-    {'id':6,'Name':'Triceps','check':false},
-  ])
-   
-  const [toolData,settoolData] = useState<ListtDataType[]>([
-    {'id':1,'Name':'Machine','check':false},
-    {'id':2,'Name':'Dumbbell','check':false},
-    {'id':3,'Name':'Rod','check':false}
-])
+ 
 
-  const [showList,setShowList] = useState<jsonType[]>([])
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  const editFunction = ():void => {
+    console.log("Its Edit function")
+    const checkedtool = toolList.filter((item)=>item.check).map((el)=> el.Name)
+    const checkedMuscle = muscelList.filter((item)=>item.check).map((el)=> el.Name)
+    const exerciseList = updateExerciseList.filter((el)=>{
+      return checkedMuscle.includes(el.Muscle)
+    })
+    const listData = exerciseList.filter((el)=>{
+      return checkedtool.includes(el.tool)
+    })
+    setShowList(listData)
+}
+useEffect(()=>{
+  editFunction()
+},[])
 
-const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType[])=>{
-     
-      const checkedtoolData = toolcheckData.filter((el)=>el.check).map((el)=>el.Name)
-      const checkedMuscle = MusclecheckData.filter((el)=>el.check).map((el)=>el.Name)
+const [showList,setShowList] = useState<jsonType[]>([])
+const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType[]) => {
 
+    const checkedtoolData = toolcheckData.filter((el)=>el.check).map((el)=>el.Name)
+    const checkedMuscle = MusclecheckData.filter((el)=>el.check).map((el)=>el.Name)
    if(checkedtoolData.length > 0 && checkedMuscle.length > 0 ){
-              const exerciseList = UpdateExerciseList.filter((el)=>{
-                return checkedMuscle.includes(el.Muscle)
-              })
-              const listData = exerciseList.filter((el)=>{
-                 return checkedtoolData.includes(el.tool)
-              })
-              setShowList(listData)
-        }else if(checkedtoolData.length > 0 && checkedMuscle.length <= 0){
-              const exerciseList = UpdateExerciseList.filter((el)=>{
+            const exerciseList = updateExerciseList.filter((el)=>{
+              return checkedMuscle.includes(el.Muscle)
+            })
+            const listData = exerciseList.filter((el)=>{
+                return checkedtoolData.includes(el.tool)
+            })
+            setShowList(listData)
+    }else if(checkedtoolData.length > 0 && checkedMuscle.length <= 0){
+              const exerciseList = updateExerciseList.filter((el)=>{
                 return checkedtoolData.includes(el.tool)
               })
             setShowList(exerciseList)
         }else{
-              const exerciseList = UpdateExerciseList.filter((el)=>{
-                return checkedMuscle.includes(el.Muscle)
-              })
-            setShowList(exerciseList)
-        }
+                const exerciseList = updateExerciseList.filter((el)=>{
+                  return checkedMuscle.includes(el.Muscle)
+                })
+              setShowList(exerciseList)
+          }
 }
 
   const handleMuscle= (muscleList:ListtDataType):void => {
 
-    const checkedMuscle = MusclesData.map((item)=>(
+    const checkedMuscle = muscelList.map((item)=>(
       item.id == muscleList.id ? {...item,check:!item.check}:item)
     )
-    setMusclesData(checkedMuscle)
-    filterList(checkedMuscle,toolData)
+    setMuscleList(checkedMuscle)
+    filterList(checkedMuscle,toolList)
   
   }
   const handleTool = (tool:ListtDataType)=>{
-      const checkedtool = toolData.map((item)=>(
+      const checkedtool = toolList.map((item)=>(
         item.id == tool.id ? {...item,check:!item.check}:item)
       )
-      settoolData(checkedtool)
-      filterList(MusclesData,checkedtool)
+      setToolList(checkedtool)
+      filterList(muscelList,checkedtool)
   }
 
   const handleChooseExercise = (id:number)=> {
      const checkedExercise = showList.map((item)=>(
       item.Id == id ? {...item,check:!item.check}:item)
     )
-    setShowList(checkedExercise)
-    const checkingData = UpdateExerciseList.map((item)=>(
+    setShowList(checkedExercise) // Only Show Data
+    const checkingData = updateExerciseList.map((item)=>(
       item.Id == id ? {...item,check:!item.check}:item)
     )
-    setUpdateExerciseList(checkingData)
+    setupdateExerciseList(checkingData) // overAll List
     
-  }
+  } 
 
   const handleActivityPage = () =>{
      const finalList = showList.filter((el) => el.check)
      console.log('finalist',finalList)
-     setFinalList(finalList)
-     navigate('/ActivityPage', {state:finalList});
+     setShowList(finalList)
+     navigate('/ActivityPage');
+
 
  }
 
   return (
     <div>
        <Grid container spacing={5}>
-            {MusclesData.map((element)=>
+            {muscelList.map((element)=>
              <Grid item xs={3}>
               <Chip  
                 key= {element.id}
@@ -135,7 +132,7 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
               />
               </Grid>
           )}
-          {toolData.map((element)=>
+          {toolList.map((element)=>
              <Grid item xs={3}>
               <Chip  
                 key= {element.id}

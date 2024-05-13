@@ -1,3 +1,18 @@
+export const muscleData = [
+	  {'id':1,'Name':'Chest','check':false},
+	  {'id':2,'Name':'Back','check':false},
+	  {'id':3,'Name':'Shoulder','check':false},
+	  {'id':4,'Name':'Leg','check':false},
+	  {'id':5,'Name':'Biceps','check':false},
+	  {'id':6,'Name':'Triceps','check':false},
+	]
+
+export const ToolData = [
+	{'id':1,'Name':'Machine','check':false},
+    {'id':2,'Name':'Dumbbell','check':false},
+    {'id':3,'Name':'Rod','check':false}
+]
+
 export const ExerciseList = [
 	{
 		"Id": 1,
