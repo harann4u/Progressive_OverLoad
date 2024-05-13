@@ -1,9 +1,9 @@
 
 import {Button,Chip,Grid,List,ListItem,ListItemText,Checkbox} from '@mui/material';
 import { ExerciseList } from '../../data/mockJson/exerciselist';
-import { useState } from 'react';
+import { useState,useContext } from 'react';
 import { makeStyles } from '@mui/styles';
-
+import { GlobalContent } from '../../data/context/globalcontext';
 import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -36,7 +36,7 @@ const ListWorkout = () => {
       return {...el,check:false}
   })
   
-  
+  const {setFinalList} = useContext(GlobalContent)
   const [UpdateExerciseList,setUpdateExerciseList] = useState<jsonType[]>(newList)
   const navigate = useNavigate()
   const classes = useStyles();
@@ -116,6 +116,7 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
   const handleActivityPage = () =>{
      const finalList = showList.filter((el) => el.check)
      console.log('finalist',finalList)
+     setFinalList(finalList)
      navigate('/ActivityPage', {state:finalList});
 
  }
