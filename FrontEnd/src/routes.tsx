@@ -12,9 +12,9 @@ const AppRoutes = () => {
         <Routes>
             <Route path = '/' element = {<DashBoard/>}/>
             <Route path= "/Feed" element = {<Feed/>}/>  
-             <Route path= "/Workout" element = {<Workout/>}/> 
-             <Route path="/Profile" element = {<Profile/>}/>
-             <Route path="/ActivityPage" element = {<ActivityPage/>}/>
+            <Route path= "/Workout" element = {<Workout/>}/> 
+            <Route path="/Profile" element = {<Profile/>}/>
+            <Route path="/ActivityPage" element = {<ActivityPage/>}/>
         </Routes>
        </Router>
     </div>

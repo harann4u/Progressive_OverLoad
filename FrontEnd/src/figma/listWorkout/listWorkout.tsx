@@ -35,8 +35,9 @@ const ListWorkout = () => {
   const newList = ExerciseList.map((el)=>{
       return {...el,check:false}
   })
- 
-   const [UpdateExerciseList,setUpdateExerciseList] = useState<jsonType[]>(newList)
+  
+  
+  const [UpdateExerciseList,setUpdateExerciseList] = useState<jsonType[]>(newList)
   const navigate = useNavigate()
   const classes = useStyles();
   const [MusclesData,setMusclesData] = useState<ListtDataType[]>([
@@ -115,7 +116,8 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
   const handleActivityPage = () =>{
      const finalList = showList.filter((el) => el.check)
      console.log('finalist',finalList)
-     navigate('/ActivityPage')
+     navigate('/ActivityPage', {state:finalList});
+
  }
 
   return (
