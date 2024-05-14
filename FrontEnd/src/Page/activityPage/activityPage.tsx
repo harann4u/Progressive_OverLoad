@@ -1,13 +1,16 @@
-import React, { useContext } from 'react'
-import { useLocation } from 'react-router-dom'
-import {List,ListItem,ListItemText,Button} from '@mui/material';
-import { GlobalContent } from '../../data/context/globalcontext';
+import {  useContext,useEffect, useState } from 'react'
+import {ListItem,ListItemText,Button} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useLocalstorage } from '../../localStorage/useLocalStorage';
+import { GlobalContent } from '../../data/context/globalcontext';
+
 
 
 const ActivityPage = () => {
-  const {updateExerciseList,muscelList,toolList} = useContext(GlobalContent)
   const navigate = useNavigate()
+  const [showList,setShowList] = useState<string[]>([])
+  const {  getItem ,removeItem } = useLocalstorage('ActivityPageData')
+  const {updateExerciseList,muscelList,toolList} = useContext(GlobalContent)
  
   const  ChcekedList = () => {
     const checkedtool = toolList.filter((item)=>item.check).map((el)=> el.Name)
@@ -37,7 +40,10 @@ const ActivityPage = () => {
       }
    
   }
-  const Exercise = ChcekedList()
+  // const Exercise = ChcekedList()
+    let Exercise:string[] = []
+     Exercise = getItem()
+  
   
   const handleEdit = () => {
    navigate('/Workout')
@@ -46,12 +52,12 @@ const ActivityPage = () => {
   return (
     <div>
           <p>Activity page</p>
-          {Exercise.map((item)=>(
+          {/* {!showList && <p>The data is Empty</p> } */}
+          {Exercise ? Exercise.map((item)=>(
               <ListItem >
-                  <ListItemText primary={item}/>
-                  
+                  <ListItemText primary={item}/>        
             </ListItem>
-            ))
+            )) : <h1>Go and choose the Exercise</h1>
           }
           <div>
                <Button sx = {{display:'flex',alignItems:'center' }}variant='contained' onClick={()=>handleEdit()} >Edit</Button>

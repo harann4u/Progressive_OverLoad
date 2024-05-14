@@ -1,10 +1,11 @@
 
 import {Button,Chip,Grid,List,ListItem,ListItemText,Checkbox} from '@mui/material';
-import { ExerciseList } from '../../data/mockJson/exerciselist';
 import { useState,useContext, useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import { GlobalContent } from '../../data/context/globalcontext';
 import { useNavigate } from 'react-router-dom';
+import { useLocalstorage } from '../../localStorage/useLocalStorage';
+
 
 const useStyles = makeStyles({
   enableChips:{
@@ -35,12 +36,13 @@ const ListWorkout = () => {
   const {setupdateExerciseList,updateExerciseList,muscelList,setMuscleList,toolList,setToolList} = useContext(GlobalContent)
   const navigate = useNavigate()
   const classes = useStyles();
- 
+  const { setItem , getItem , removeItem } = useLocalstorage('ActivityPageData')
+
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   const editFunction = ():void => {
-    console.log('Edit dunction')
-    filterList(muscelList,toolList)
+     console.log('Edit dunction')
+    setShowList(filterList(muscelList,toolList)) 
   }
 useEffect(()=>{
   const checkedtoolData = toolList.filter((el)=>el.check).map((el)=>el.Name);
@@ -50,7 +52,7 @@ useEffect(()=>{
 
 const [showList,setShowList] = useState<jsonType[]>([])
 
-const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType[]) => {
+const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType[]):jsonType[] => {
    
     const checkedtoolData = toolcheckData.filter((el)=>el.check).map((el)=>el.Name)
     const checkedMuscle = MusclecheckData.filter((el)=>el.check).map((el)=>el.Name)
@@ -61,18 +63,22 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
             const listData = exerciseList.filter((el)=>{
                 return checkedtoolData.includes(el.tool)
             })
-            setShowList(listData)
+            // setShowList(listData)
+            return listData
     }else if(checkedtoolData.length > 0 && checkedMuscle.length <= 0){
               const exerciseList = updateExerciseList.filter((el)=>{
                 return checkedtoolData.includes(el.tool)
               })
-            setShowList(exerciseList)
+            // setShowList(exerciseList)
+            return exerciseList
         }else{
                 const exerciseList = updateExerciseList.filter((el)=>{
                   return checkedMuscle.includes(el.Muscle)
                 })
-              setShowList(exerciseList)
+              // setShowList(exerciseList)
+              return exerciseList
           }
+         
 }
 
   const handleMuscle= (muscleList:ListtDataType):void => {
@@ -81,7 +87,7 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
       item.id == muscleList.id ? {...item,check:!item.check}:item)
     )
     setMuscleList(checkedMuscle)
-    filterList(checkedMuscle,toolList)
+   setShowList(filterList(checkedMuscle,toolList)) 
   
   }
   const handleTool = (tool:ListtDataType)=>{
@@ -89,7 +95,7 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
         item.id == tool.id ? {...item,check:!item.check}:item)
       )
       setToolList(checkedtool)
-      filterList(muscelList,checkedtool)
+    setShowList(filterList(muscelList,checkedtool)) 
   }
 
   const handleChooseExercise = (id:number)=> {
@@ -105,12 +111,18 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
   } 
 
   const handleActivityPage = () =>{
-     const finalList = showList.filter((el) => el.check)
+     const finalList = showList.filter((el) => el.check).map((el)=>el.Name)
      console.log('finalist',finalList)
-     setShowList(finalList)
+     
+     if (finalList.length > 0 && finalList) {
+      console.log("value In");
+      setItem(finalList); // setting data in local storage
+    }else{
+      removeItem()
+    }
+     // setting Data in local Storage
+    //  console.log('getItem',getItem())
      navigate('/ActivityPage');
-
-
  }
 
   return (
