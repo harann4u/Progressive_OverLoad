@@ -12,7 +12,11 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
-const Workout = () => {
+interface buttonNameProps {
+  buttonName:string
+}
+
+const Workout = ({buttonName}:buttonNameProps) => {
   const [open,setOpen] = useState(false)
   const handleclickOpen = ()=>{
      setOpen(true)
@@ -22,7 +26,7 @@ const Workout = () => {
  }
   return (
   <div style ={{display:'flex',alignItems:'center',justifyContent:'center',marginTop:'100px'}}>
-      <Button variant="contained" onClick={handleclickOpen} >Start WorkOut</Button>
+      <Button variant="contained" onClick={handleclickOpen} >{buttonName} WorkOut</Button>
        <Dialog
         fullScreen
         open={open}

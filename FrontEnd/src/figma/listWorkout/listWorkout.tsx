@@ -39,24 +39,19 @@ const ListWorkout = () => {
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   const editFunction = ():void => {
-    console.log("Its Edit function")
-    const checkedtool = toolList.filter((item)=>item.check).map((el)=> el.Name)
-    const checkedMuscle = muscelList.filter((item)=>item.check).map((el)=> el.Name)
-    const exerciseList = updateExerciseList.filter((el)=>{
-      return checkedMuscle.includes(el.Muscle)
-    })
-    const listData = exerciseList.filter((el)=>{
-      return checkedtool.includes(el.tool)
-    })
-    setShowList(listData)
-}
+    console.log('Edit dunction')
+    filterList(muscelList,toolList)
+  }
 useEffect(()=>{
-  editFunction()
+  const checkedtoolData = toolList.filter((el)=>el.check).map((el)=>el.Name);
+  const checkedMuscle = muscelList.filter((el)=>el.check).map((el)=>el.Name);
+  (checkedtoolData.length > 0) || (checkedMuscle.length > 0)  ? editFunction(): false;
 },[])
 
 const [showList,setShowList] = useState<jsonType[]>([])
-const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType[]) => {
 
+const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType[]) => {
+   
     const checkedtoolData = toolcheckData.filter((el)=>el.check).map((el)=>el.Name)
     const checkedMuscle = MusclecheckData.filter((el)=>el.check).map((el)=>el.Name)
    if(checkedtoolData.length > 0 && checkedMuscle.length > 0 ){

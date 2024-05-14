@@ -5,6 +5,8 @@ import Profile from '../profile/profile';
 import { useState } from 'react';
 import Workout from '../workOut/workout';
 
+
+
 const DashBoard = () => {
   const [tab, setTab] = useState(0);
   console.log('DashBoard')
@@ -12,7 +14,7 @@ const DashBoard = () => {
           <div className='dashboardContainer'>
             <div className='dashboardPage'>
                   {tab === 0 && <Feed />}
-                  {tab === 1 && <Workout />}
+                  {tab === 1 && <Workout buttonName = 'Choose'/>}
                   {tab === 2 && <Profile />}
             </div>
             <div className='tab'>
