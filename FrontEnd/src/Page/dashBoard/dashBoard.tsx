@@ -2,17 +2,17 @@ import {BottomNavigation,BottomNavigationAction, Typography } from '@mui/materia
 import Feed from '../feed/feed';
 import  './dashboard.css';
 import Profile from '../profile/profile';
-import ActivityPage from '../activityPage/activityPage';
+// import ActivityPage from '../activityPage/activityPage';
 import { useState } from 'react';
-import Workout from '../workOut/workout';
-import { useLocalstorage } from '../../localStorage/useLocalStorage';
+import Workout from '../workout/workout';
+import { useLocalstorage } from '../../helper/localStorage/useLocalStorage';
 import { Link } from 'react-router-dom';
 
 
 const DashBoard = () => {
   const [tab, setTab] = useState(0);
-  const {  getItem  } = useLocalstorage('ActivityPageData')
-  const resumeExerciseData= getItem() // getting Data from in local storage
+  const {  getLocalStorageItem  } = useLocalstorage('ActivityPageData')
+  const resumeExerciseData= getLocalStorageItem() // getting Data from in local storage
   console.log('DashBoard')
   return (
           <div className='dashboardContainer'>

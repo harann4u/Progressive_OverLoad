@@ -1,7 +1,7 @@
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import DashBoard from "./Page/dashBoard/dashBoard"
+import DashBoard from "./Page/dashboard/dashboard"
 import Feed from "./Page/feed/feed"
-import Workout from "./Page/workOut/workout"
+import Workout from "./Page/workout/workout"
 import Profile from "./Page/profile/profile"
 import ActivityPage from "./Page/activityPage/activityPage"
 

@@ -1,6 +1,6 @@
 export const useLocalstorage = (key:string) => {
     
-    const setItem = (value:unknown) => {
+    const setLocalStorageItem = (value:unknown) => {
         // console.log('keu',key)
         try{
             window.localStorage.setItem(key,JSON.stringify(value))
@@ -8,7 +8,7 @@ export const useLocalstorage = (key:string) => {
             throw Error
         }
     }
-    const getItem = () => {
+    const getLocalStorageItem = () => {
         try{
             const item = window.localStorage.getItem(key)
             // console.log('item',item)
@@ -18,7 +18,7 @@ export const useLocalstorage = (key:string) => {
         }
     }
 
-    const removeItem = () => {
+    const removeStorageItem = () => {
         try{
              window.localStorage.removeItem(key)       
         }catch (Error){
@@ -26,5 +26,5 @@ export const useLocalstorage = (key:string) => {
         }
     }
 
-    return { setItem , getItem , removeItem }
+    return {  setLocalStorageItem ,  getLocalStorageItem ,  removeStorageItem }
 }

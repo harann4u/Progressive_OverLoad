@@ -4,7 +4,7 @@ import { useState,useContext, useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import { GlobalContent } from '../../data/context/globalcontext';
 import { useNavigate } from 'react-router-dom';
-import { useLocalstorage } from '../../localStorage/useLocalStorage';
+import { useLocalstorage } from '../../helper/localStorage/useLocalStorage';
 
 
 const useStyles = makeStyles({
@@ -36,7 +36,7 @@ const ListWorkout = () => {
   const {setupdateExerciseList,updateExerciseList,muscelList,setMuscleList,toolList,setToolList} = useContext(GlobalContent)
   const navigate = useNavigate()
   const classes = useStyles();
-  const { setItem , getItem , removeItem } = useLocalstorage('ActivityPageData')
+  const {  setLocalStorageItem ,  getLocalStorageItem ,  removeStorageItem } = useLocalstorage('ActivityPageData')
 
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -116,12 +116,11 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
      
      if (finalList.length > 0 && finalList) {
       console.log("value In");
-      setItem(finalList); // setting data in local storage
+      setLocalStorageItem(finalList); // setting data in local storage
     }else{
-      removeItem()
+      removeStorageItem()
     }
-     // setting Data in local Storage
-    //  console.log('getItem',getItem())
+   
      navigate('/ActivityPage');
  }
 
