@@ -10,12 +10,13 @@ const ActivityPage = () => {
   const {finalExerciseList} = useContext(GlobalContent)
   const navigate = useNavigate()
   const {   getLocalStorageItem  } = useLocalstorage('ActivityPageData')
-  let Exercise:string[];
-  if(finalExerciseList.length > 0 && finalExerciseList){
-    Exercise = finalExerciseList
-  }else{
-    Exercise = getLocalStorageItem()
-  }
+
+  // if(finalExerciseList.length > 0 && finalExerciseList){
+  //   Exercise = finalExerciseList
+  // }else{
+  //   Exercise = getLocalStorageItem()
+  // }
+  let Exercise:string[] = finalExerciseList?.length ? finalExerciseList : getLocalStorageItem();
   
   const handleEdit = () => {
    navigate('/Workout')

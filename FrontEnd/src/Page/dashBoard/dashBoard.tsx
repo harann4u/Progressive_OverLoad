@@ -7,7 +7,7 @@ import { useState } from 'react';
 import Workout from '../workout/workout';
 import { useLocalstorage } from '../../helper/localStorage/useLocalstorage';
 import { Link } from 'react-router-dom';
-
+import Examplestoreimpl from '../Concept_implementations/examplestoreimpl';
 
 const DashBoard = () => {
   const [tab, setTab] = useState(0);
@@ -20,7 +20,7 @@ const DashBoard = () => {
                   {tab === 0 && <Feed />}
                   {tab === 1 && <Workout buttonName = 'Choose'/>}
                   {tab === 2 && <Profile />}
-                  {/* {tab === 3 && <ActivityPage />} */}
+                  {tab === 3 && <Examplestoreimpl/>}
             </div>
             <div className='tab'>
                   <BottomNavigation
@@ -33,6 +33,7 @@ const DashBoard = () => {
                               <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> Feed </Typography>}  />
                               <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> Workout </Typography>} />
                               <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> Profile </Typography>}  />
+                              <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> concept Impelementation </Typography>}  />
                             {resumeExerciseData ?  <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> Resume Button </Typography>} component = {Link}  to="/ActivityPage" /> : null}
                   </BottomNavigation>
               </div>

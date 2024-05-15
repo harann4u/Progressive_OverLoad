@@ -1,6 +1,8 @@
 import './App.css'
 import AppRoutes from './routes'
 import { GlobalContextProvider } from './data/context/globalcontext'
+import { store } from './data/redux/store'
+import { Provider } from 'react-redux'
 
 export interface SampleData {
     Name:string,
@@ -12,9 +14,12 @@ function App() {
   return (
     <div>
       {/* App initalozer */}
-      <GlobalContextProvider>
-           <AppRoutes/>
-      </GlobalContextProvider>
+      <Provider store = {store}>
+        <GlobalContextProvider>
+            <AppRoutes/>
+        </GlobalContextProvider>
+      </Provider>
+     
     </div>
   )
 }

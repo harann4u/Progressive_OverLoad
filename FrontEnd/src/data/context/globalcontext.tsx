@@ -21,7 +21,6 @@ export const GlobalContextProvider = ({children}: any) => {
            setUserInfo,
            settingInfo: setttingInfo,
            setSettingInfo,
-           // Exercise ,muscle,Tool
            updateExerciseList: exercisefinalList,
            setupdateExerciseList: setexercisefinalList,
            muscelList: muscleList,
