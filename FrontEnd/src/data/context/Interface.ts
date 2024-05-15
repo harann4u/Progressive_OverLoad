@@ -57,6 +57,7 @@ export const initialtoolData:toolDataType[] = [{
 }]
 
 
+
 export interface IGlobalContext {
     userInfo:IUserInfo,
     setUserInfo:(e:IUserInfo)=>void,
@@ -69,20 +70,13 @@ export interface IGlobalContext {
     muscelList:muscleDataType[],
     setMuscleList:(eachList:muscleDataType[]) => void;
     // Tool
-    toolList:toolDataType[]
+    toolList:toolDataType[],
     setToolList:(eachList:toolDataType[]) => void
+    // finalExerciseList 
+    finalExerciseList:string[],
+    setFinalExerciseList:(newList: string[]) => void;
+
 }
-// export const initalGlobalContext = {
-//     useInfo:{
-//         name:'',
-//         weight:''
-//     }, 
-//     setUserInfo:()=>null,
-//     settingInfo:{
-//         fontsize:''
-//     },
-//     setSettingInfo:()=> null,
-// }
 
 
 

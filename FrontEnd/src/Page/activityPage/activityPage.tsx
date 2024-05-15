@@ -1,17 +1,22 @@
 import {  useContext,useEffect, useState } from 'react'
 import {ListItem,ListItemText,Button} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useLocalstorage } from '../../helper/localStorage/useLocalStorage';
-// import { GlobalContent } from '../../data/context/globalcontext';
+import { useLocalstorage } from '../../helper/localStorage/useLocalstorage';
+import { GlobalContent } from '../../data/context/globalcontext';
 
 
 
 const ActivityPage = () => {
+  const {finalExerciseList} = useContext(GlobalContent)
   const navigate = useNavigate()
-  const [showList,setShowList] = useState<string[]>([])
-  const {   getLocalStorageItem ,removeStorageItem } = useLocalstorage('ActivityPageData')
-    let Exercise:string[] = []
-     Exercise = getLocalStorageItem()
+  const {   getLocalStorageItem  } = useLocalstorage('ActivityPageData')
+  let Exercise:string[];
+  if(finalExerciseList.length > 0 && finalExerciseList){
+    Exercise = finalExerciseList
+  }else{
+    Exercise = getLocalStorageItem()
+  }
+  
   const handleEdit = () => {
    navigate('/Workout')
   }

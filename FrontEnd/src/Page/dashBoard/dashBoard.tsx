@@ -5,7 +5,7 @@ import Profile from '../profile/profile';
 // import ActivityPage from '../activityPage/activityPage';
 import { useState } from 'react';
 import Workout from '../workout/workout';
-import { useLocalstorage } from '../../helper/localStorage/useLocalStorage';
+import { useLocalstorage } from '../../helper/localStorage/useLocalstorage';
 import { Link } from 'react-router-dom';
 
 

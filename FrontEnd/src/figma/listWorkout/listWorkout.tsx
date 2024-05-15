@@ -4,8 +4,7 @@ import { useState,useContext, useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import { GlobalContent } from '../../data/context/globalcontext';
 import { useNavigate } from 'react-router-dom';
-import { useLocalstorage } from '../../helper/localStorage/useLocalStorage';
-
+import { useLocalstorage } from '../../helper/localStorage/useLocalstorage';
 
 const useStyles = makeStyles({
   enableChips:{
@@ -33,7 +32,7 @@ type jsonType = {
 }
 
 const ListWorkout = () => {
-  const {setupdateExerciseList,updateExerciseList,muscelList,setMuscleList,toolList,setToolList} = useContext(GlobalContent)
+  const {setupdateExerciseList,updateExerciseList,muscelList,setMuscleList,toolList,setToolList,finalExerciseList,setFinalExerciseList} = useContext(GlobalContent)
   const navigate = useNavigate()
   const classes = useStyles();
   const {  setLocalStorageItem ,  getLocalStorageItem ,  removeStorageItem } = useLocalstorage('ActivityPageData')
@@ -112,15 +111,12 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
 
   const handleActivityPage = () =>{
      const finalList = showList.filter((el) => el.check).map((el)=>el.Name)
-     console.log('finalist',finalList)
-     
-     if (finalList.length > 0 && finalList) {
-      console.log("value In");
-      setLocalStorageItem(finalList); // setting data in local storage
-    }else{
-      removeStorageItem()
-    }
-   
+     setFinalExerciseList(finalList)
+        if (finalList.length > 0 && finalList) {
+          setLocalStorageItem(finalList); // setting data in local storage
+        }else{
+          removeStorageItem()
+        }
      navigate('/ActivityPage');
  }
 

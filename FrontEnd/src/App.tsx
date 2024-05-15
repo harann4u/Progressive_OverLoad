@@ -11,6 +11,7 @@ function App() {
   
   return (
     <div>
+      {/* App initalozer */}
       <GlobalContextProvider>
            <AppRoutes/>
       </GlobalContextProvider>
