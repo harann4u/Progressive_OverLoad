@@ -3,6 +3,7 @@ import AppRoutes from './routes'
 import { GlobalContextProvider } from './data/context/globalcontext'
 import { store } from './data/redux/store'
 import { Provider } from 'react-redux'
+import Appinitialize from './figma/appinitialize/appinitialize'
 
 export interface SampleData {
     Name:string,
@@ -13,7 +14,7 @@ function App() {
   
   return (
     <div>
-      {/* App initalozer */}
+     <Appinitialize/>
       <Provider store = {store}>
         <GlobalContextProvider>
             <AppRoutes/>
