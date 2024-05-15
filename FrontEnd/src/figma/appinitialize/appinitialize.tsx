@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Appinitialize = () => {
+const Appinitialize = ({children}:any) => {
   return (
     <div>
-      <h1>app Initialize</h1>
+      {children}
     </div>
   )
 }

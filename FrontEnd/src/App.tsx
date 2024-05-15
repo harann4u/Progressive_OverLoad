@@ -14,12 +14,14 @@ function App() {
   
   return (
     <div>
-     <Appinitialize/>
+     <Appinitialize>
       <Provider store = {store}>
-        <GlobalContextProvider>
-            <AppRoutes/>
-        </GlobalContextProvider>
-      </Provider>
+          <GlobalContextProvider>
+              <AppRoutes/>
+          </GlobalContextProvider>
+        </Provider>
+     </Appinitialize>
+      
      
     </div>
   )
