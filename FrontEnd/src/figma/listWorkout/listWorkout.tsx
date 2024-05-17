@@ -32,10 +32,10 @@ type jsonType = {
 }
 
 const ListWorkout = () => {
-  const {setupdateExerciseList,updateExerciseList,muscelList,setMuscleList,toolList,setToolList,finalExerciseList,setFinalExerciseList} = useContext(GlobalContent)
+  const {setupdateExerciseList,updateExerciseList,muscelList,setMuscleList,toolList,setToolList,setFinalExerciseList} = useContext(GlobalContent)
   const navigate = useNavigate()
   const classes = useStyles();
-  const {  setLocalStorageItem ,  getLocalStorageItem ,  removeStorageItem } = useLocalstorage('ActivityPageData')
+  const {  setLocalStorageItem  ,  removeStorageItem } = useLocalstorage('ActivityPageData')
 
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -46,6 +46,8 @@ const ListWorkout = () => {
 useEffect(()=>{
   const checkedtoolData = toolList.filter((el)=>el.check).map((el)=>el.Name);
   const checkedMuscle = muscelList.filter((el)=>el.check).map((el)=>el.Name);
+  // console.log('checkedtoolData',checkedtoolData);
+  // console.log('checkedMuscle',checkedMuscle);
   (checkedtoolData.length > 0) || (checkedMuscle.length > 0)  ? editFunction(): false;
 },[])
 
@@ -55,6 +57,7 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
    
     const checkedtoolData = toolcheckData.filter((el)=>el.check).map((el)=>el.Name)
     const checkedMuscle = MusclecheckData.filter((el)=>el.check).map((el)=>el.Name)
+    
    if(checkedtoolData.length > 0 && checkedMuscle.length > 0 ){
             const exerciseList = updateExerciseList.filter((el)=>{
               return checkedMuscle.includes(el.Muscle)
