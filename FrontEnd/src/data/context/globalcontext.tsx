@@ -16,6 +16,7 @@ export const GlobalContextProvider = ({children}: any) => {
     const [muscleList,setMuscleList] = useState<muscleDataType[]>(initialMuscleData) 
     const [toolList,setToolList] = useState<toolDataType[]>(initialtoolData) 
     const [finalExercise,setFinalExercise] = useState<string[]>([])
+    const [locatStorageState , setLocalStorageState] = useState<string[]>([])
     return <GlobalContent.Provider value={{
            userInfo,
            setUserInfo,
@@ -29,7 +30,9 @@ export const GlobalContextProvider = ({children}: any) => {
            toolList:toolList,
            setToolList:setToolList,
            finalExerciseList:finalExercise,
-           setFinalExerciseList:setFinalExercise
+           setFinalExerciseList:setFinalExercise,
+           locatStoageState:locatStorageState,
+           setLocalStorageState:setLocalStorageState
         }}>
             {children}
         </GlobalContent.Provider>

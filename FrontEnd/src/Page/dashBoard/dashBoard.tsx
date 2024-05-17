@@ -1,8 +1,9 @@
 import {BottomNavigation,BottomNavigationAction, Typography } from '@mui/material';
 import Feed from '../feed/feed';
+import  { useContext} from 'react'
 import  './dashboard.css';
 import Profile from '../profile/profile';
-// import ActivityPage from '../activityPage/activityPage';
+import { GlobalContent } from '../../data/context/globalcontext'
 import { useState } from 'react';
 import Workout from '../workout/workout';
 import { useLocalstorage } from '../../helper/localStorage/useLocalstorage';
@@ -11,6 +12,7 @@ import Examplestoreimpl from '../Concept_implementations/examplestoreimpl';
 
 const DashBoard = () => {
   const [tab, setTab] = useState(0);
+  const {locatStoageState} = useContext(GlobalContent)
   const {  getLocalStorageItem  } = useLocalstorage('ActivityPageData')
   const resumeExerciseData= getLocalStorageItem() // getting Data from in local storage
   console.log('DashBoard')
@@ -34,7 +36,7 @@ const DashBoard = () => {
                               <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> Workout </Typography>} />
                               <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> Profile </Typography>}  />
                               {/* <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> concept Impelementation </Typography>}  /> */}
-                            {resumeExerciseData ?  <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> Resume Button </Typography>} component = {Link}  to="/ActivityPage" /> : null}
+                            { locatStoageState ?  <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> Resume Button </Typography>} component = {Link}  to="/ActivityPage" /> : null}
                   </BottomNavigation>
               </div>
           </div>

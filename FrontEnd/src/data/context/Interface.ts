@@ -75,7 +75,9 @@ export interface IGlobalContext {
     // finalExerciseList 
     finalExerciseList:string[],
     setFinalExerciseList:(newList: string[]) => void;
-
+    // local Storage states
+    locatStoageState:string[]
+    setLocalStorageState:(newList: string[]) => void;
 }
 
 

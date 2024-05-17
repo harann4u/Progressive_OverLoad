@@ -1,12 +1,16 @@
-import React, { useEffect ,useContext} from 'react'
+import  { useEffect ,useContext} from 'react'
 import axios from 'axios'
 import { GlobalContent } from '../../data/context/globalcontext'
 import { ExerciseDataType } from '../../data/context/Interface'
+import { Endpoints } from '../../helper/endpoint'
+import { useLocalstorage } from '../../helper/localStorage/useLocalstorage'
 
 const Appinitialize = ({children}:any) => {
-  const {setMuscleList,setToolList,setupdateExerciseList} = useContext(GlobalContent)
-   const fetchData = async () => {
-        const response =  await axios.get('https://mocki.io/v1/1100a2b2-c64e-4b0f-bfe0-948b4fa470ce')
+  const {setMuscleList,setToolList,setupdateExerciseList,finalExerciseList,locatStoageState,setLocalStorageState} = useContext(GlobalContent)
+  const {   getLocalStorageItem  } = useLocalstorage('ActivityPageData') 
+  
+  const fetchData = async () => {
+        const response =  await axios.get(Endpoints.ExerciseFullList)
         setToolList(response.data.ToolData)
         setMuscleList(response.data.muscleData)
         const updatedList = response.data.ExerciseList.map((el:ExerciseDataType)=>{
@@ -14,8 +18,13 @@ const Appinitialize = ({children}:any) => {
         })
         setupdateExerciseList(updatedList)
    }
+   const fetchLocalStorage = ()=>{
+    let Exercise:string[] =  getLocalStorageItem();
+    Exercise?.length ?  setLocalStorageState(Exercise) :  setLocalStorageState([])
+  }
     useEffect(()=>{
       fetchData()
+      fetchLocalStorage()
     },[])
 
   return (

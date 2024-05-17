@@ -7,16 +7,11 @@ import { GlobalContent } from '../../data/context/globalcontext';
 
 
 const ActivityPage = () => {
-  const {finalExerciseList} = useContext(GlobalContent)
+  const {finalExerciseList,locatStoageState} = useContext(GlobalContent)
   const navigate = useNavigate()
-  const {   getLocalStorageItem  } = useLocalstorage('ActivityPageData')
-
-  // if(finalExerciseList.length > 0 && finalExerciseList){
-  //   Exercise = finalExerciseList
-  // }else{
-  //   Exercise = getLocalStorageItem()
-  // }
-  let Exercise:string[] = finalExerciseList?.length ? finalExerciseList : getLocalStorageItem();
+  console.log('dgvkdgk',locatStoageState)
+  let Exercise:string[] = finalExerciseList?.length ? finalExerciseList : locatStoageState;
+  
   
   const handleEdit = () => {
    navigate('/Workout')

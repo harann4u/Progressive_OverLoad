@@ -32,7 +32,7 @@ type jsonType = {
 }
 
 const ListWorkout = () => {
-  const {setupdateExerciseList,updateExerciseList,muscelList,setMuscleList,toolList,setToolList,setFinalExerciseList} = useContext(GlobalContent)
+  const {setupdateExerciseList,updateExerciseList,muscelList,setMuscleList,toolList,setToolList,setFinalExerciseList,setLocalStorageState} = useContext(GlobalContent)
   const navigate = useNavigate()
   const classes = useStyles();
   const {  setLocalStorageItem  ,  removeStorageItem } = useLocalstorage('ActivityPageData')
@@ -119,6 +119,7 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
           setLocalStorageItem(finalList); // setting data in local storage
         }else{
           removeStorageItem()
+          setLocalStorageState([])
         }
      navigate('/ActivityPage');
  }
