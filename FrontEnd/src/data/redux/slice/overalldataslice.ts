@@ -1,23 +1,7 @@
-import { createSlice  } from "@reduxjs/toolkit";
+import { createSlice,PayloadAction  } from "@reduxjs/toolkit";
+import { ExerciseDataType,muscleDataType,toolDataType } from "../../context/Interface";
 
- interface muscleDataType {
-    "id":number,
-    "Name" :string,
-    "check":boolean
-}
 
- interface toolDataType {
-    "id":number,
-    "Name" :string,
-    "check":boolean
-}
-
- interface ExerciseDataType {
-    "Id": number,
-	"Name": string,
-	"Muscle":string,
-	"tool": string,
-}
 
 interface overallDataType {
     ExerciseList:ExerciseDataType[],
@@ -31,13 +15,12 @@ const overAllInitialData:overallDataType= {
     ToolData:[]
 }
 
-console.log("Overalldata Slice")
 
 export const overAllDataSlice = createSlice({
     name:'overAlldataSlice',
     initialState:overAllInitialData,
     reducers:{
-            overAllDatareducer:(state,action) =>{
+            overAllDatareducer:(state,action:PayloadAction<overallDataType>) =>{
                 console.log("If dbvidhbi")
                 const {ExerciseList,muscleData,ToolData} = action.payload
                 if(ExerciseList)

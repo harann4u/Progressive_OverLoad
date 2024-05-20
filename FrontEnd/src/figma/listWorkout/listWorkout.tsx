@@ -7,17 +7,18 @@ import { useNavigate } from 'react-router-dom';
 import { useLocalstorage } from '../../helper/localStorage/useLocalstorage';
 import { useDispatch,useSelector } from 'react-redux';
 import { RootState } from '../../data/redux/store';
+import { localStorageListReducer,selectExerciseListReducer, selectMuscleListReducer,selectToolListReducer,finalExerciseReducer } from '../../data/redux/slice/toolAndMuscleSlice';
 
-  const useStyles = makeStyles({
-    enableChips:{
-      backgroundColor: '#06d6a0', 
-      color: 'white',
-    },
-    disableChips:{
-      backgroundColor: 'white', 
-      color: 'black',
-    }
-  })
+const useStyles = makeStyles({
+  enableChips:{
+    backgroundColor: '#06d6a0', 
+    color: 'white',
+  },
+  disableChips:{
+    backgroundColor: 'white', 
+    color: 'black',
+  }
+})
 
 type ListtDataType = {
    id:number,
@@ -34,36 +35,36 @@ type jsonType = {
 }
 
 const ListWorkout = () => {
-  const {setupdateExerciseList,updateExerciseList,muscelList,setMuscleList,toolList,setToolList,setFinalExerciseList,setLocalStorageState,overAllData} = useContext(GlobalContent)
+  // const {setLocalStorageState} = useContext(GlobalContent)
   const navigate = useNavigate()
   const classes = useStyles();
   const {  setLocalStorageItem  ,  removeStorageItem } = useLocalstorage('ActivityPageData')
   const overAllDataList = useSelector((state:RootState)=>state.overAllData)
-  console.log('overAllDataList',overAllDataList)
+  const muscleStoreList = useSelector((state:RootState)=>state.selectedList.muscleData)
+  const toolStoreList = useSelector((state:RootState)=>state.selectedList.ToolData)
+  const exerciseStoreList = useSelector((state:RootState)=>state.selectedList.ExerciseList)
+  const dispatch = useDispatch()
   
   const initialSetting  = ()=>{
-    console.log('Demo')
-          const addCheckExerciseList = overAllData.current.ExerciseList.map((el:jsonType)=>{
-            return {...el,check: false}
+    
+      const addCheckExerciseList = overAllDataList.ExerciseList.map((el:jsonType)=>{
+           return {...el,check: false}
       })
-      // Initial setting of MuscleList and ToolList if needed
-      setupdateExerciseList(addCheckExerciseList);
-      setMuscleList(overAllData.current.muscleData);
-      setToolList(overAllData.current.ToolData);
+    
+      dispatch(selectExerciseListReducer(addCheckExerciseList))
+      dispatch(selectToolListReducer(overAllDataList.ToolData))
+      dispatch(selectMuscleListReducer(overAllDataList.muscleData))
   }
  
-
   const editFunction = ():void => {
-     console.log('Edit dunction')
-    setShowList(filterList(muscelList,toolList)) 
+     setShowList(filterList(muscleStoreList,toolStoreList)) 
   }
 
 
 useEffect(()=>{
-  initialSetting()
-  const checkedtoolData = toolList.filter((el)=>el.check).map((el)=>el.Name);
-  const checkedMuscle = muscelList.filter((el)=>el.check).map((el)=>el.Name);
-  (checkedtoolData.length > 0) || (checkedMuscle.length > 0)  ? editFunction(): false;
+  const checkedtoolData = toolStoreList.filter((el)=>el.check).map((el)=>el.Name);
+  const checkedMuscle = muscleStoreList.filter((el)=>el.check).map((el)=>el.Name);
+  (checkedtoolData.length > 0) || (checkedMuscle.length > 0)  ? editFunction():  initialSetting();
 },[])
 
 const [showList,setShowList] = useState<jsonType[]>([])
@@ -74,7 +75,7 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
     const checkedMuscle = MusclecheckData.filter((el)=>el.check).map((el)=>el.Name)
     
    if(checkedtoolData.length > 0 && checkedMuscle.length > 0 ){
-            const exerciseList = updateExerciseList.filter((el)=>{
+            const exerciseList = exerciseStoreList.filter((el)=>{
               return checkedMuscle.includes(el.Muscle)
             })
             const listData = exerciseList.filter((el)=>{
@@ -83,13 +84,13 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
             // setShowList(listData)
             return listData
     }else if(checkedtoolData.length > 0 && checkedMuscle.length <= 0){
-              const exerciseList = updateExerciseList.filter((el)=>{
+              const exerciseList = exerciseStoreList.filter((el)=>{
                 return checkedtoolData.includes(el.tool)
               })
             // setShowList(exerciseList)
             return exerciseList
         }else{
-                const exerciseList = updateExerciseList.filter((el)=>{
+                const exerciseList = exerciseStoreList.filter((el)=>{
                   return checkedMuscle.includes(el.Muscle)
                 })
               // setShowList(exerciseList)
@@ -100,20 +101,19 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
 
   const handleMuscle= (muscleList:ListtDataType):void => {
 
-    const checkedMuscle = muscelList.map((item)=>(
+    const checkedMuscle = muscleStoreList.map((item)=>(
       item.id == muscleList.id ? {...item,check:!item.check}:item)
     )
-    console.log('csc',checkedMuscle)
-    setMuscleList(checkedMuscle)
-   setShowList(filterList(checkedMuscle,toolList)) 
+    dispatch(selectMuscleListReducer(checkedMuscle))
+    setShowList(filterList(checkedMuscle,toolStoreList)) 
   
   }
   const handleTool = (tool:ListtDataType)=>{
-      const checkedtool = toolList.map((item)=>(
+      const checkedtool = toolStoreList.map((item)=>(
         item.id == tool.id ? {...item,check:!item.check}:item)
       )
-      setToolList(checkedtool)
-    setShowList(filterList(muscelList,checkedtool)) 
+      dispatch(selectToolListReducer(checkedtool))
+    setShowList(filterList(muscleStoreList,checkedtool)) 
   }
 
   const handleChooseExercise = (id:number)=> {
@@ -121,21 +121,23 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
       item.Id == id ? {...item,check:!item.check}:item)
     )
     setShowList(checkedExercise) // Only Show Data
-    const checkingData = updateExerciseList.map((item)=>(
+    const checkingData = exerciseStoreList.map((item)=>(
       item.Id == id ? {...item,check:!item.check}:item)
     )
-    setupdateExerciseList(checkingData) // overAll List
+    dispatch(selectExerciseListReducer(checkingData)) // overAll List
     
   } 
 
   const handleActivityPage = () =>{
      const finalList = showList.filter((el) => el.check).map((el)=>el.Name)
-     setFinalExerciseList(finalList)
+    //  setFinalExerciseList(finalList)
+     dispatch(finalExerciseReducer(finalList))
         if (finalList.length > 0 && finalList) {
+          dispatch(localStorageListReducer(finalList))
           setLocalStorageItem(finalList); // setting data in local storage
         }else{
           removeStorageItem()
-          setLocalStorageState([])
+          dispatch(localStorageListReducer([]))
         }
      navigate('/ActivityPage');
  }
@@ -143,7 +145,7 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
   return (
     <div>
        <Grid container spacing={5}>
-            {muscelList.map((element)=>
+            {muscleStoreList.map((element)=>
              <Grid item xs={3}>
               <Chip  
                 key= {element.id}
@@ -154,7 +156,7 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
               />
               </Grid>
           )}
-          {toolList.map((element)=>
+          {toolStoreList.map((element)=>
              <Grid item xs={3}>
               <Chip  
                 key= {element.id}
