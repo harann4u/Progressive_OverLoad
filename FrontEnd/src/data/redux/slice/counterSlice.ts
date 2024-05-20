@@ -9,10 +9,13 @@ const intialCounter:counterState = {
     value:10
 }
 
+console.log("slice")
+
 const counterSlice = createSlice({
     name: "counter",
     initialState: intialCounter,
     reducers: {
+  
         increment:(state) => {
             state.value+=1
         },

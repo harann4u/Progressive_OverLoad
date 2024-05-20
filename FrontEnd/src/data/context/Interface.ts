@@ -1,20 +1,3 @@
-export interface IUserInfo{
-    name:string,
-    weight:string
-}
-
-export const initialUserInfo:IUserInfo = {
-    name:'',
-    weight:''
-}
-
-export interface ISettingInfo{
-   fontsize:string
-}
-
-export const initialSettingInfo:ISettingInfo = {
-    fontsize:'0'
-} 
 
 export interface ExerciseDataType {
     "Id": number,
@@ -23,7 +6,6 @@ export interface ExerciseDataType {
 	"tool": string,
     "check":boolean
 }
-
 export const InitalListData:ExerciseDataType[] = [{
     "Id": 0,
 	"Name": '',
@@ -59,10 +41,10 @@ export const initialtoolData:toolDataType[] = [{
 
 
 export interface IGlobalContext {
-    userInfo:IUserInfo,
-    setUserInfo:(e:IUserInfo)=>void,
-    settingInfo: ISettingInfo,
-    setSettingInfo: (e: ISettingInfo) => void;
+    // userInfo:IUserInfo,
+    // setUserInfo:(e:IUserInfo)=>void,
+    // settingInfo: ISettingInfo,
+    // setSettingInfo: (e: ISettingInfo) => void;
     // Checked List 
     updateExerciseList: ExerciseDataType[],
     setupdateExerciseList: (newList: ExerciseDataType[]) => void;
@@ -76,8 +58,10 @@ export interface IGlobalContext {
     finalExerciseList:string[],
     setFinalExerciseList:(newList: string[]) => void;
     // local Storage states
-    locatStoageState:string[]
+    localStorageState:string[]
     setLocalStorageState:(newList: string[]) => void;
+    // oberAllData
+    overAllData:any
 }
 
 

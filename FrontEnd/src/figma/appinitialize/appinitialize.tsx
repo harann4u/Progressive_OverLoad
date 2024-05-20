@@ -1,22 +1,20 @@
-import  { useEffect ,useContext} from 'react'
+import  { useEffect ,useContext, useState} from 'react'
 import axios from 'axios'
 import { GlobalContent } from '../../data/context/globalcontext'
-import { ExerciseDataType } from '../../data/context/Interface'
 import { Endpoints } from '../../helper/endpoint'
 import { useLocalstorage } from '../../helper/localStorage/useLocalstorage'
+import { overAllDatareducer } from '../../data/redux/slice/overalldataslice'
+import { useDispatch } from 'react-redux'
 
 const Appinitialize = ({children}:any) => {
-  const {setMuscleList,setToolList,setupdateExerciseList,finalExerciseList,locatStoageState,setLocalStorageState} = useContext(GlobalContent)
+  const {setLocalStorageState,overAllData} = useContext(GlobalContent)
   const {   getLocalStorageItem  } = useLocalstorage('ActivityPageData') 
-  
+  const dispatch = useDispatch()
   const fetchData = async () => {
         const response =  await axios.get(Endpoints.ExerciseFullList)
-        setToolList(response.data.ToolData)
-        setMuscleList(response.data.muscleData)
-        const updatedList = response.data.ExerciseList.map((el:ExerciseDataType)=>{
-            return {...el,check:false}
-        })
-        setupdateExerciseList(updatedList)
+        console.log('response.data',response.data)
+        overAllData.current  = response.data // putting Data in global Context
+        dispatch(overAllDatareducer(response.data)) // putting data in Store.
    }
    const fetchLocalStorage = ()=>{
     let Exercise:string[] =  getLocalStorageItem();

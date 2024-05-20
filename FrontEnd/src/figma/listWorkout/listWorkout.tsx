@@ -5,17 +5,19 @@ import { makeStyles } from '@mui/styles';
 import { GlobalContent } from '../../data/context/globalcontext';
 import { useNavigate } from 'react-router-dom';
 import { useLocalstorage } from '../../helper/localStorage/useLocalstorage';
+import { useDispatch,useSelector } from 'react-redux';
+import { RootState } from '../../data/redux/store';
 
-const useStyles = makeStyles({
-  enableChips:{
-    backgroundColor: '#06d6a0', 
-    color: 'white',
-  },
-  disableChips:{
-    backgroundColor: 'white', 
-    color: 'black',
-  }
-})
+  const useStyles = makeStyles({
+    enableChips:{
+      backgroundColor: '#06d6a0', 
+      color: 'white',
+    },
+    disableChips:{
+      backgroundColor: 'white', 
+      color: 'black',
+    }
+  })
 
 type ListtDataType = {
    id:number,
@@ -32,22 +34,35 @@ type jsonType = {
 }
 
 const ListWorkout = () => {
-  const {setupdateExerciseList,updateExerciseList,muscelList,setMuscleList,toolList,setToolList,setFinalExerciseList,setLocalStorageState} = useContext(GlobalContent)
+  const {setupdateExerciseList,updateExerciseList,muscelList,setMuscleList,toolList,setToolList,setFinalExerciseList,setLocalStorageState,overAllData} = useContext(GlobalContent)
   const navigate = useNavigate()
   const classes = useStyles();
   const {  setLocalStorageItem  ,  removeStorageItem } = useLocalstorage('ActivityPageData')
+  const overAllDataList = useSelector((state:RootState)=>state.overAllData)
+  console.log('overAllDataList',overAllDataList)
+  
+  const initialSetting  = ()=>{
+    console.log('Demo')
+          const addCheckExerciseList = overAllData.current.ExerciseList.map((el:jsonType)=>{
+            return {...el,check: false}
+      })
+      // Initial setting of MuscleList and ToolList if needed
+      setupdateExerciseList(addCheckExerciseList);
+      setMuscleList(overAllData.current.muscleData);
+      setToolList(overAllData.current.ToolData);
+  }
+ 
 
-
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   const editFunction = ():void => {
      console.log('Edit dunction')
     setShowList(filterList(muscelList,toolList)) 
   }
+
+
 useEffect(()=>{
+  initialSetting()
   const checkedtoolData = toolList.filter((el)=>el.check).map((el)=>el.Name);
   const checkedMuscle = muscelList.filter((el)=>el.check).map((el)=>el.Name);
-  // console.log('checkedtoolData',checkedtoolData);
-  // console.log('checkedMuscle',checkedMuscle);
   (checkedtoolData.length > 0) || (checkedMuscle.length > 0)  ? editFunction(): false;
 },[])
 
@@ -88,6 +103,7 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
     const checkedMuscle = muscelList.map((item)=>(
       item.id == muscleList.id ? {...item,check:!item.check}:item)
     )
+    console.log('csc',checkedMuscle)
     setMuscleList(checkedMuscle)
    setShowList(filterList(checkedMuscle,toolList)) 
   

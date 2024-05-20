@@ -12,7 +12,7 @@ import Examplestoreimpl from '../Concept_implementations/examplestoreimpl';
 
 const DashBoard = () => {
   const [tab, setTab] = useState(0);
-  const {locatStoageState} = useContext(GlobalContent)
+  const {localStorageState} = useContext(GlobalContent)
   const {  getLocalStorageItem  } = useLocalstorage('ActivityPageData')
   const resumeExerciseData= getLocalStorageItem() // getting Data from in local storage
   console.log('DashBoard')
@@ -35,8 +35,8 @@ const DashBoard = () => {
                               <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> Feed </Typography>}  />
                               <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> Workout </Typography>} />
                               <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> Profile </Typography>}  />
-                              {/* <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> concept Impelementation </Typography>}  /> */}
-                            { locatStoageState ?  <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> Resume Button </Typography>} component = {Link}  to="/ActivityPage" /> : null}
+                              <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> concept Impelementation </Typography>}  />
+                            { localStorageState?.length?   <BottomNavigationAction label={ <Typography variant='subtitle2' fontWeight="bold"> Resume Button </Typography>} component = {Link}  to="/ActivityPage" /> : null}
                   </BottomNavigation>
               </div>
           </div>
