@@ -2,12 +2,14 @@
 import {Button,Chip,Grid,List,ListItem,ListItemText,Checkbox} from '@mui/material';
 import { useState,useContext, useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
-import { GlobalContent } from '../../data/context/globalcontext';
+// import { GlobalContent } from '../../data/context/globalcontext';
 import { useNavigate } from 'react-router-dom';
 import { useLocalstorage } from '../../helper/localStorage/useLocalstorage';
 import { useDispatch,useSelector } from 'react-redux';
 import { RootState } from '../../data/redux/store';
 import { localStorageListReducer,selectExerciseListReducer, selectMuscleListReducer,selectToolListReducer,finalExerciseReducer } from '../../data/redux/slice/toolAndMuscleSlice';
+import  './listWorkout.css'
+
 
 const useStyles = makeStyles({
   enableChips:{
@@ -43,8 +45,8 @@ const ListWorkout = () => {
   const muscleStoreList = useSelector((state:RootState)=>state.selectedList.muscleData)
   const toolStoreList = useSelector((state:RootState)=>state.selectedList.ToolData)
   const exerciseStoreList = useSelector((state:RootState)=>state.selectedList.ExerciseList)
-  const dispatch = useDispatch()
-  
+ 
+   const dispatch = useDispatch()
   const initialSetting  = ()=>{
     
       const addCheckExerciseList = overAllDataList.ExerciseList.map((el:jsonType)=>{
@@ -129,7 +131,7 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
   } 
 
   const handleActivityPage = () =>{
-     const finalList = showList.filter((el) => el.check).map((el)=>el.Name)
+     const finalList = showList.filter((el) => el.check)
     //  setFinalExerciseList(finalList)
      dispatch(finalExerciseReducer(finalList))
         if (finalList.length > 0 && finalList) {
@@ -143,48 +145,57 @@ const filterList = (MusclecheckData:ListtDataType[] ,toolcheckData:ListtDataType
  }
 
   return (
-    <div>
-       <Grid container spacing={5}>
-            {muscleStoreList.map((element)=>
-             <Grid item xs={3}>
-              <Chip  
-                key= {element.id}
-                label= {element.Name} 
-                variant="outlined"
-                className={element.check ? classes.enableChips : classes.disableChips}
-                onClick={()=>handleMuscle(element)}
-              />
-              </Grid>
-          )}
-          {toolStoreList.map((element)=>
-             <Grid item xs={3}>
-              <Chip  
-                key= {element.id}
-                label= {element.Name} 
-                variant="outlined"
-                className={element.check ? classes.enableChips : classes.disableChips}
-                onClick={()=>handleTool(element)}
-              />
-              </Grid>
-          )}
-      </Grid>
-      <Grid container spacing={5} sx ={{marginTop:"80px",display:"flex",justifyContent:'center'}}>
-          <List>
-             {showList.map((item,index)=>(
-                  <ListItem key={index}>
-                      <ListItemText primary={item.Name}/>
-                      <ListItemText primary={item.Muscle}/>
-                      <ListItemText primary={item.tool}/>
-                      <Checkbox
-                        checked= {item.check}
-                        onChange={()=>handleChooseExercise(item.Id)}
+    <div className='ListWorkout'>
+          <div className='MuscleChips'>
+              {muscleStoreList.map((element)=>
+                    <Grid item xs={1}>
+                      <Chip  
+                        key= {element.id}
+                        label= {element.Name} 
+                        variant="outlined"
+                        className={element.check ? classes.enableChips : classes.disableChips}
+                        onClick={()=>handleMuscle(element)}
                       />
-                </ListItem>
-                ))
-             }
-          </List>
-      </Grid>
-          <div>
+                      </Grid>
+                  )}
+          </div>
+          <div className='ToolChips'>
+              {toolStoreList.map((element)=>
+                <Grid item xs={1}>
+                  <Chip  
+                    key= {element.id}
+                    label= {element.Name} 
+                    variant="outlined"
+                    className={element.check ? classes.enableChips : classes.disableChips}
+                    onClick={()=>handleTool(element)}
+                  />
+                  </Grid>
+              )}
+          </div>
+       {/* <Grid container spacing={5}>
+           
+        
+      </Grid> */}
+      <div className='ListExercise'>
+         <div className='ListExerciseListout'>
+                    <List>
+                      {showList.map((item,index)=>(
+                            <ListItem key={index}>
+                                <ListItemText primary={item.Name}/>
+                                {/* <ListItemText primary={item.Muscle}/>
+                                <ListItemText primary={item.tool}/> */}
+                                <Checkbox
+                                  checked= {item.check}
+                                  onChange={()=>handleChooseExercise(item.Id)}
+                                />
+                          </ListItem>
+                          ))
+                      }
+                    </List>
+         </div>
+      </div>
+     
+          <div className='startButton_Listworkout'>
                <Button sx = {{display:'flex',alignItems:'center' }}variant='contained' onClick={()=>handleActivityPage()}>Start</Button>
           </div>       
     </div>

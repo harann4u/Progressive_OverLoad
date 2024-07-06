@@ -2,6 +2,7 @@ import { createContext,useState ,useRef} from "react";
 import { IGlobalContext,ExerciseDataType,muscleDataType,toolDataType,InitalListData,initialMuscleData,initialtoolData } from "./Interface";
 import { ExerciseList,muscleData,ToolData } from '../../data/mockJson/exerciselist';
 
+
 export const GlobalContent = createContext<IGlobalContext>({} as IGlobalContext);
 
 export const GlobalContextProvider = ({children}: any) => {

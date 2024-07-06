@@ -3,7 +3,9 @@
     flex-direction: column;
     width: 100vw;
     height: 100vh;
-    background-color: #ecd5d5;
+    background-color: #FFF3CC;
+    display: flex;
+    height: 100vh;
 }
 .tab{
     width: 100vw;

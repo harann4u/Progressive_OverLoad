@@ -7,8 +7,8 @@ interface overallDataType {
     ExerciseList:ExerciseDataType[],
     muscleData:muscleDataType[],
     ToolData:toolDataType[],
-    finalexercise:string[],
-    localStorage:string[]
+    finalexercise:ExerciseDataType[],
+    localStorage:ExerciseDataType[]
 }
 
 const overAllInitialData:overallDataType= {
@@ -30,12 +30,12 @@ export const toolAndMuscleAndExerciseSlice = createSlice({
             state.ToolData = action.payload
         },
         selectExerciseListReducer:(state,action:PayloadAction<ExerciseDataType[]>) => {
-                state.ExerciseList = action.payload
+            state.ExerciseList = action.payload
         },
-        finalExerciseReducer:(state,action:PayloadAction<string[]>)=>{
-            state.finalexercise = action.payload
+        finalExerciseReducer:(state,action:PayloadAction<ExerciseDataType[]>)=>{
+            state.finalexercise = action.payload 
         },
-        localStorageListReducer:(state,action:PayloadAction<string[]>)=>{
+        localStorageListReducer:(state,action:PayloadAction<ExerciseDataType[]>)=>{
             state.localStorage = action.payload
         }
     }
